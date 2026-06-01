@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('role:pustakawan')->group(function () {
     Route::get('book', [BookController::class, 'index'])->name('book');
     Route::post('book', [BookController::class, 'store'])->name('book.store');
+    Route::patch('book/{id}', [BookController::class, 'update'])->name('book.update');
+    Route::delete('book/{id}', [BookController::class, 'destroy'])->name('book.destroy');
 });
 
 require __DIR__.'/auth.php';

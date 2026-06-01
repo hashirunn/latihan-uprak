@@ -50,7 +50,7 @@ class BookController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -58,7 +58,7 @@ class BookController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -66,7 +66,18 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|max:100',
+            'author' => 'required|max:50',
+            'year' => 'required|digits:4|min:1970|max:'.date('Y'),
+            'publisher' => 'required|max:50',
+            'city' => 'required|max:50',
+            'bookshelf_id' => 'required'
+        ]);
+
+        Book::findOrFail('id', $id)->update($validated);
+
+        return redirect()->route('book');
     }
 
     /**
@@ -74,6 +85,7 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Book::findOrFail('id', $id)->delete();
+        return redirect()->route('book');
     }
 }
